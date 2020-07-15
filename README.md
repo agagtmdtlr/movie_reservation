@@ -10,8 +10,10 @@ movie_webservice
   css   
 ### server   
   aphach tomcat 9   
-### data    
+### database    
   oracle 11g
+### sql file
+  테이블.txt
 ### jar
 cos.jar
 javax.servlet.jar
