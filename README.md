@@ -19,4 +19,6 @@ jstl-1.2.jar
 ojdbc6.jar ( oracle version과 맞추기 )
 standard.jar
 
+### 실행
+WebContent/common/Main.jsp
 
