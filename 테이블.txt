@@ -1,0 +1,433 @@
+﻿-- 회원테이블
+create table members(
+    id varchar2(30) primary key,
+    password varchar2(30),
+    name varchar2(30),
+    phone varchar2(30),
+    email varchar2(30),
+    address varchar2(30)
+);
+
+
+-- 영화테이블
+create table movies(
+    movie_no number primary key,
+    title varchar2(50),
+    supervision varchar2(30),
+    actor varchar(100),
+    relese_date date,
+    genre1 varchar2(45),
+    genre2 varchar2(45),
+    image varchar2(100),
+    video varchar2(200),
+    intro varchar2(500),
+    s_time number
+);
+
+-- 리뷰테이블
+create table reviews(
+    review_no number primary key,
+    id varchar2(30),
+    movie_no number references movies(movie_no),
+    rating number(2,1),
+    content varchar2(500)
+);
+
+
+-- 제약조건(회원이 삭제되어도 리뷰는 남아있음)
+alter table reviews
+add constraint reviews_fk_members
+FOREIGN key(id) references members(id);
+
+-- 극장테이블
+create table theaters(
+    theater_no number primary key,
+    address varchar2(100),
+    tel varchar2(100)
+);
+
+-- 상영관 테이블
+create table screens(
+    screen_no number primary key,
+    theater_no number references theaters(theater_no),
+    seat number,
+    room number
+);
+
+-- 시간테이블
+create table times(
+    time_no number primary key,
+    movie_no number references movies(movie_no),
+    screen_no number references screens(screen_no),
+    screen_date varchar2(100),
+    start_time date
+);
+
+
+-- 예매테이블
+create table reservations(
+    reservation_no number primary key,
+    id varchar2(30) references members(id),
+    time_no number references times(time_no),
+    count number
+);
+
+-- 예매현황테이블
+create table re_statement(
+    time_no number references times(time_no),
+    seat_state number
+);
+
+
+drop table members;
+drop table theaters;
+drop table movies;
+drop table screens;
+drop table times;
+drop table reviews;
+drop table reservations;
+drop table re_statement;
+
+
+create sequence movies_seq;
+create sequence reviews_seq;
+create sequence reservations_seq;
+create sequence times_seq;
+create sequence theaters_seq;
+create sequence screens_seq;
+
+drop sequence movies_seq;
+drop sequence reviews_seq;
+drop sequence reservations_seq;
+drop sequence times_seq;
+drop sequence theaters_seq;
+drop sequence screens_seq;
+
+-- 회원 데이터 삽입
+insert into members values('kim', '1234', '김철수', '010-0000-0000', 'kim@naver.com', '서울시 강남구');
+insert into members values('park', '1234', '박영희', '010-0000-0000', 'park@naver.com', '서울시 서초구');
+insert into members values('noh', '1234', '노홍철', '010-0000-0000', 'noh@naver.com', '서울시 노원구');
+insert into members values('lee', '1234', '이수근', '010-0000-0000', 'lee@naver.com', '서울시 송파구');
+insert into members values('oh', '1234', '오징어', '010-0000-0000', 'oh@naver.com', '서울시 강서구');
+
+-- 영화 데이터 삽입
+insert into movies values(movies_seq.nextval,'히트맨', '최원섭', '권상우, 이이경, 황우슬혜', '2020/02/05', '액션', '코믹', 'hitman.jpg','src', 'intro', '120');
+insert into movies values(movies_seq.nextval,'작은 아씨들', '그레타 거윅', '플로렌스 퓨, 엠마 왓슨', '2020/02/12', '드라마', '로맨스', 'little.jpg','src', 'intro', '135');
+insert into movies values(movies_seq.nextval,'남산의 부장들', '우민호', '이병헌 , 이성민, 이희준', '2020/01/22', '드라마', '정치', 'man.jpg','src', 'intro', '104');
+insert into movies values(movies_seq.nextval,'버즈 오브 프레이', '캐시 얀', '마고 로비, 저니 스몰 렛벨', '2020/02/05', '범죄', '액션', 'harle.jpg','src', 'intro', '104');
+insert into movies values(movies_seq.nextval,'클로젯', '김광빈', '하정우, 김남길', '2020/02/05', '드라마', '미스터리', 'closet.jpg','src', 'intro', '94');
+insert into movies values(movies_seq.nextval,'조조 래빗', '타이카 와이티티','타이카 와이티티', '2020/02/05', '드라마', '코믹 ', 'jojo.jpg','src', 'intro', '104');
+insert into movies values(movies_seq.nextval,'스파이 지니어스', '닉 브루노','톰 홀랜드, 윌 스미스', '2020/01/22', 'SF', '애니메이션', 'spy.jpg','src', 'intro', '102');
+insert into movies values(movies_seq.nextval,'미스터 주: 사라진 VIP', '김태윤 ','이성민, 김서형', '2020/01/22', '드라마', '코믹 ', 'zoo.jpg','src', 'intro', '113');
+insert into movies values(movies_seq.nextval,'정직한 후보', '장유정', '라미란, 김무열, 윤세아', '2020/02/12', '드라마', '코믹 ', 'honest.jpg','src', 'intro', '104');
+
+-- 동영상
+update movies set video='https://www.youtube.com/embed/C--7z6NsEz0' where movie_no = 1;
+update movies set video='https://www.youtube.com/embed/79_nkjuOWVg' where movie_no = 2;
+update movies set video='https://www.youtube.com/embed/BIKz5KQpiog' where movie_no = 3;
+update movies set video='https://www.youtube.com/embed/yTPmPkdVlV8' where movie_no = 4;
+update movies set video='https://www.youtube.com/embed/ywsz033q7t0' where movie_no = 5;
+update movies set video='https://https://www.youtube.com/embed/po3Gz3-lFmc' where movie_no = 6;
+update movies set video='https://www.youtube.com/embed/3rAY2QFz-iQ' where movie_no = 7;
+update movies set video='https://www.youtube.com/embed/fV9mmutl0SM' where movie_no = 8;
+update movies set video='https://www.youtube.com/embed/0q9zi0cnvmg' where movie_no = 9;
+select * from movies;
+commit;
+-- 줄거리
+update movies set intro='
+웹툰 작가가 되고 싶어 국정원을 탈출한'|| CHR (10) ||
+'비밀 프로젝트 방패연 출신 전설의 암살요원' ||CHR(39)||'준'||CHR(39)||CHR (10) ||
+'그러나 현실은 연재하는 작품마다 역대급 악플만 받을 뿐이다.
+.......' where movie_no = 1;
+
+update movies set intro=
+'Dear women'|| CHR (10) ||
+'그해 겨울, 사랑스러운 자매들을 만났다'|| CHR (10) ||
+'7년 후, 어른이 된 그들에겐'|| CHR (10) ||
+'각기 다른 숙제가 놓이게 되는데
+.......' where movie_no = 2;
+
+update movies set intro=
+''|| CHR (34) ||'각하, 제가 어떻게 하길 원하십니까'|| CHR (34) || CHR (10) ||
+'1979년 10월 26일, 중앙정보부장 김규평(이병헌)이 대한민국 대통령을 암살한다.'|| CHR (10) ||
+'흔들린 충성, 그 날의 총성'|| CHR (10) ||
+'.......' where movie_no = 3;
+
+update movies set intro=
+'똑같으면 재미없지'|| CHR (10) ||
+'깨부수고 벗어 던져, 너답게!'|| CHR (10) ||
+'오랜 연인이던 조커와 헤어진 ‘할리 퀸(마고 로비)’은 처음 맞이한 해방에 황홀함을 느낀다.'|| CHR (10) ||
+'하지만 조커라는 방패막이 사라지자 평생 처음 무방비 상태에 놓인 할리 퀸을 고담시에서'|| CHR (10) ||
+'.......' where movie_no = 4;
+
+update movies set intro=
+'벽장 문이 열리고, 아이가 사라졌다!'|| CHR (10) ||
+'갑작스러운 사고로 아내를 잃은 상원(하정우)과 그의 딸 이나(허율)'|| CHR (10) ||
+'상원은 소원해진 이나와의 관계를 회복하기 위해 새집으로 이사를 간다.'|| CHR (10) ||
+'상원은 이나와 가까워지기 위해 노력하지만 어긋난 사이는 좀처럼 회복되지 않는다.'|| CHR (10) ||
+'그러던 어느 날 이나가 새로운 친구가 생겼다며 웃기 시작한다.'|| CHR (10) ||
+'.......' where movie_no = 5;
+
+update movies set intro=
+'제2차 세계대전 말기, 엄마 ‘로지’(스칼렛 요한슨)와 '|| CHR (10) ||
+'단둘이 살고 있는 10살 소년 ‘조조’(로만 그리핀 데이비스).'|| CHR (10) ||
+'원하던 독일 소년단에 입단하지만 겁쟁이 토끼라 놀림 받을 뿐이다.'|| CHR (10) ||
+'상심한 ‘조조’에게 상상 속 친구 ‘히틀러’(타이카 와이티티)는 유일한 위안이 된다.'|| CHR (10) ||
+'.......' where movie_no = 6;
+
+update movies set intro=
+'잘나가는 슈퍼 스파이!'|| CHR (10) ||
+'엉뚱한 슈퍼 지니어스를 만나 한순간에 ‘새’ 됐다!?'|| CHR (10) ||
+'전 세계를 위협하는 불법 무기 거래 첩보를 입수한 스파이 에이전트는'|| CHR (10) ||
+'천상천하 유아독존 슈퍼 스파이 ‘랜스’(윌 스미스)를 파견한다.'|| CHR (10) ||
+'.......' where movie_no = 7;
+
+update movies set intro=
+'동물의 말이 들리는 순간, 수사의 파트너가 바뀐다!'|| CHR (10) ||
+'국가정보국 에이스 요원 태주.'|| CHR (10) ||
+'특사로 파견된 VIP 경호 임무를 수행하던 중'|| CHR (10) ||
+'갑자기 이상한 행동을 하는 태주를 의심하는 민국장과 만식을 뒤로 하고,'|| CHR (10) ||
+'태주는 군견 알리와 함께 VIP를 찾아 나서는데'|| CHR (10) ||
+'.......' where movie_no = 8;
+
+
+update movies set intro=
+'어제까진 뻥쟁이, 오늘부턴 정직한 후보?!'|| CHR (10) ||
+'거짓말이 제일 쉬운 3선 국회의원 ‘주상숙’에게 청천벽력이 떨어진다.'|| CHR (10) ||
+'하루아침에 거짓말은 1도 할 수 없는 ‘진실의 주둥이’를 갖게 된 것!'|| CHR (10) ||
+'.......' where movie_no = 9;
+
+
+
+commit;
+select * from movies ;
+select * from reviews where movie_no=1;
+
+-- 리뷰 데이터 삽입
+insert into reviews values(reviews_seq.nextval, 'kim', 2, '3.3','재밌당');
+insert into reviews values(reviews_seq.nextval, 'noh', 1, '4.8','권상우만 보임');
+insert into reviews values(reviews_seq.nextval, 'kim', 4, '3.0','댓글~');
+insert into reviews values(reviews_seq.nextval, 'lee', 6, '2.1','노잼');
+insert into reviews values(reviews_seq.nextval, 'park', 2, '2.1','유쾌하고 넘 재밌어욤');
+select * from reviews;
+commit;
+
+-- 극장 데이터 삽입
+insert into theaters values(theaters_seq.nextval, '강남','02)877-1234');
+insert into theaters values(theaters_seq.nextval, '강변','02)847-1234');
+insert into theaters values(theaters_seq.nextval, '압구정','02)827-1234');
+insert into theaters values(theaters_seq.nextval, '명동','02)857-1234');
+insert into theaters values(theaters_seq.nextval, '천호','02)867-1234');
+
+
+-- 상영관 데이터 삽입
+insert into screens values(screens_seq.nextval, '1', 60, 1);
+insert into screens values(screens_seq.nextval, '4', 50, 2);
+insert into screens values(screens_seq.nextval, '5', 50, 2);
+insert into screens values(screens_seq.nextval, '4', 50, 5);
+insert into screens values(screens_seq.nextval, '2', 50, 3);
+insert into screens values(screens_seq.nextval, '2', 50, 4);
+insert into screens values(screens_seq.nextval, '5', 50, 5);
+insert into screens values(screens_seq.nextval, '3', 50, 6);
+insert into screens values(screens_seq.nextval, '3', 50, 6);
+insert into screens values(screens_seq.nextval, '5', 50, 3);
+
+
+-- 시간 데이터 삽입 ( SYSDATE+(100/(24*60)))
+insert into times values(times_seq.nextval, '3', '1','2020/02/21', to_date('11:50', 'HH24:MI'));
+insert into times values(times_seq.nextval, '5', '1','2020/02/21', to_date('12:50', 'HH24:MI'));
+insert into times values(times_seq.nextval, '1', '3','2020/02/21', to_date('13:30', 'HH24:MI'));
+insert into times values(times_seq.nextval, '4', '2','2020/02/21', to_date('14:22', 'HH24:MI'));
+insert into times values(times_seq.nextval, '7', '5','2020/02/23', to_date('16:45', 'HH24:MI'));
+insert into times values(times_seq.nextval, '2', '1','2020/02/22', to_date('13:38', 'HH24:MI'));
+insert into times values(times_seq.nextval, '7', '2','2020/02/22', to_date('17:40', 'HH24:MI'));
+insert into times values(times_seq.nextval, '1', '2','2020/02/23', to_date('18:40', 'HH24:MI'));
+insert into times values(times_seq.nextval, '9', '2','2020/02/24', to_date('18:40', 'HH24:MI'));
+
+insert into times values(times_seq.nextval, '2', '2','2020/02/25', to_date('10:40', 'HH24:MI'));
+insert into times values(times_seq.nextval, '3', '4','2020/02/26', to_date('12:30', 'HH24:MI'));
+insert into times values(times_seq.nextval, '4', '5','2020/02/26', to_date('19:10', 'HH24:MI'));
+insert into times values(times_seq.nextval, '4', '6','2020/02/25', to_date('20:42', 'HH24:MI'));
+insert into times values(times_seq.nextval, '5', '6','2020/02/24', to_date('23:52', 'HH24:MI'));
+insert into times values(times_seq.nextval, '6', '2','2020/02/21', to_date('14:00', 'HH24:MI'));
+insert into times values(times_seq.nextval, '8', '1','2020/02/27', to_date('15:33', 'HH24:MI'));
+insert into times values(times_seq.nextval, '9', '3','2020/02/28', to_date('18:40', 'HH24:MI'));
+insert into times values(times_seq.nextval, '9', '8','2020/02/27', to_date('16:05', 'HH24:MI'));
+
+
+-- 예매 데이터
+insert into reservations values(reservations_seq.nextval, 'noh', '1', '3');
+insert into reservations values(reservations_seq.nextval, 'kim', '2', '6');
+insert into reservations values(reservations_seq.nextval, 'lee', '4', '4');
+insert into reservations values(reservations_seq.nextval, 'park', '3', '1');
+
+select * from times;
+insert into re_statement values(1, 0);
+insert into re_statement values(2, 0);
+insert into re_statement values(3, 0);
+insert into re_statement values(4, 0);
+insert into re_statement values(5, 0);
+insert into re_statement values(6, 0);
+insert into re_statement values(7, 0);
+insert into re_statement values(8, 0);
+insert into re_statement values(9, 0);
+insert into re_statement values(10, 0);
+insert into re_statement values(11, 0);
+insert into re_statement values(12, 0);
+insert into re_statement values(13, 0);
+insert into re_statement values(14, 0);
+insert into re_statement values(15, 0);
+insert into re_statement values(16, 0);
+insert into re_statement values(17, 0);
+insert into re_statement values(18, 0);
+
+
+select * from times;
+commit;
+
+
+-- 예매 현황 데이터
+
+-- 영화 제목 찾기
+select distinct m.title
+from times t join movies m
+on t.movie_no = m.movie_no
+where t.screen_date='2020/02/24';
+
+-- 극장 찾기
+select distinct th.address, to_char(t.start_time, 'HH24:MI')
+from theaters th join ( screens s join ( times t join movies m
+on t.movie_no=m.movie_no and t.screen_date='2020/02/16' )
+on s.screen_no = t.screen_no and m.title='남산의 부장들' ) 
+on th.theater_no = s.theater_no;
+
+-- 시간찾기
+select distinct to_char(t.start_time, 'HH24:MI')
+from theaters th join ( screens s join ( times t join movies m
+on t.movie_no=m.movie_no and t.screen_date='2020/02/16' )
+on s.screen_no = t.screen_no and m.title='남산의 부장들' ) 
+on th.theater_no = s.theater_no and th.address='강변';
+
+
+-- 끝나는 시간 찾기
+select distinct to_char(start_time,'hh24:mi') as start_time , to_char(t.start_time + (s_time/(24*60)), 'hh24:mi') as end_time
+from theaters th join ( screens s join ( times t join movies m
+on t.movie_no=m.movie_no and t.screen_date='2020/02/16' )
+on s.screen_no = t.screen_no and m.title='남산의 부장들' ) 
+on th.theater_no = s.theater_no and th.address='강변';
+
+-- 상영관
+select distinct s.room
+from theaters th join ( screens s join ( times t join movies m
+on t.movie_no=m.movie_no and t.screen_date='2020/02/16' )
+on s.screen_no = t.screen_no and m.title='남산의 부장들' ) 
+on th.theater_no = s.theater_no and th.address='강변' and t.start_time = to_date('11:50','hh24:mi');
+
+-- 시간 번호 가져오기
+select distinct t.time_no
+from theaters th join ( screens s join ( times t join movies m
+on t.movie_no=m.movie_no and t.screen_date='2020/02/15' )
+on s.screen_no = t.screen_no and m.title='스파이 지니어스' ) 
+on th.theater_no = s.theater_no and th.address='강남' and t.start_time = to_date('17:40','hh24:mi') and s.room = '5';
+
+
+
+select * from reservations;
+
+
+insert into reservations values(reservations_seq.nextval, 'noh', '2', 1);
+select * from reservations;
+commit;
+
+
+
+
+select * from re_statement;
+
+-- 전체 잔여 좌석 수 구하기
+select t.time_no , s.room, s.seat - re.seat_state as rest
+from re_statement re join ( theaters th join ( screens s join ( times t join movies m
+on t.movie_no=m.movie_no)
+on s.screen_no = t.screen_no) 
+on th.theater_no = s.theater_no)
+on t.time_no=re.time_no;
+
+-- 상영관 별 잔여좌석
+select s.seat - re.seat_state as rest
+from re_statement re join ( theaters th join ( screens s join ( times t join movies m
+on t.movie_no=m.movie_no and t.screen_date='2020/02/15' )
+on s.screen_no = t.screen_no and m.title='스파이 지니어스' ) 
+on th.theater_no = s.theater_no and th.address='강남' and t.start_time = to_date('17:40','hh24:mi'))
+on t.time_no=re.time_no;
+
+
+
+
+------------------------------
+-- 아이디로 예약내역 찾기
+select * from reservations where id='noh';
+
+-- 시간번호로 영화명, 영화시작 시간, 끝나는 시간, 상영일 조회
+select t.time_no, m.title, t.screen_no, t.screen_date, to_char(start_time, 'HH24:MI') as start_time, to_char(t.start_time + (m.s_time/(24*60)), 'hh24:mi') as end_time  
+from times t join movies m  
+on t.movie_no = m.movie_no and time_no=1;
+
+-- 시간번호로 영화명, 영화시작 시간, 끝나는 시간, 상영일 조회 + 극장명 조회
+select t.time_no, m.title, th.address, s.room, t.screen_date,
+to_char(start_time, 'HH24:MI') as start_time, to_char(t.start_time + (m.s_time/(24*60)), 'hh24:mi') as end_time
+from theaters th join (screens s join (times t join movies m  
+on t.movie_no = m.movie_no and time_no=1)
+on s.screen_no = t.screen_no)
+on s.theater_no = th.theater_no;
+
+-- 예매내역
+select m.title as title, th.address as address, s.room as room, t.screen_date as screen_date ,
+to_char(start_time, 'HH24:MI') as start_time, to_char(t.start_time + (m.s_time/(24*60)), 'hh24:mi') as end_time
+from theaters th join (screens s join (times t join movies m
+on t.movie_no = m.movie_no and time_no='1')
+on s.screen_no = t.screen_no)
+on s.theater_no = th.theater_no ;
+
+
+-- 잔여 좌석
+update re_statement set seat_state = seat_state + 5 where time_no = 28;
+
+
+
+commit;
+
+
+------------------------------------------
+
+
+
+-- 평점 평균 리뷰 테이블
+select round(avg(rating),1), movie_no from reviews 
+where movie_no = 1
+GROUP BY movie_no
+having avg(rating) > 0;
+
+
+-- 작은아씨들 리뷰 수
+select count(*) as cnt from reviews where movie_no =2 ;
+
+-- 리뷰 페이징 처리
+select id, rating, content
+from ( select id, rating, content, movie_no, review_no, rank() over(order by review_no desc) as ranking from reviews where movie_no =2)
+where ranking between 1 and 5;
+
+
+
+-- 영화 개봉일 처리
+select movie_no, title, supervision, actor, to_char(relese_date, 'yyyy-mm-dd') as relese_date, genre1, genre2, image,video, intro, s_time from movies where movie_no=1;
+
+
+
+
+-------------------------
+
+-- 장르별 검색
+select movie_no, title, genre1, genre2, image from movies
+where (genre1 = '액션') or (genre2 = '액션') or (genre1 = '드라마') or (genre2 = '드라마');
+
+
