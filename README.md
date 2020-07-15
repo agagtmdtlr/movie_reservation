@@ -22,6 +22,12 @@ jstl-1.2.jar
 ojdbc6.jar ( oracle version과 맞추기 )
 standard.jar
 
-### 실행
+## 실행
 WebContent/common/Main.jsp
-
+## 특징
+MVC 패턴으로 jsp 구축  
+client_request -> __to.jsp -> __.jsp   
+login을 통해 접근 권한 관리 : 예매,리뷰 작성
+영화 예매/정보 보기 작업을 하나의 페이지에서 동적처리 가능하도록 구현  
+영화 예매 절차 어느 구간에서도 선택 변경가능/ 정보 최신화 가능하도록 구현
+영화 리뷰 페이징 처리
