@@ -12,6 +12,7 @@ movie_webservice
   aphach tomcat 9   
 ### database    
   oracle 11g
+  user : javaproject , password : oracle
 ### sql file
   테이블.txt
 ### jar
