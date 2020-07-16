@@ -12,6 +12,10 @@ movie_webservice
 ![상세보기1](https://user-images.githubusercontent.com/55948026/87554916-b686ea80-c6ef-11ea-90db-63f87becc4f7.PNG)
 ![상세보기2](https://user-images.githubusercontent.com/55948026/87554920-b71f8100-c6ef-11ea-9121-e754b65f48df.PNG)
 ![상세보기3](https://user-images.githubusercontent.com/55948026/87554922-b71f8100-c6ef-11ea-8014-1d0025f3ef10.PNG)
+### database structure
+![영화_db](https://user-images.githubusercontent.com/55948026/87675619-8eac8b00-c7b2-11ea-9927-36caca82e53d.PNG)
+### reservation page workflow
+![영화_workflow](https://user-images.githubusercontent.com/55948026/87675613-8d7b5e00-c7b2-11ea-9825-69265c203ca6.PNG)
 
 ## Environment
 ### script   
